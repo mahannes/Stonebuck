@@ -1,0 +1,24 @@
+C:\Users\hanne_000\Documents\Visual Studio 2017\Projects\Stonebuck\Stonebuck\bin\Debug\netcoreapp2.0\Stonebuck.deps.json
+C:\Users\hanne_000\Documents\Visual Studio 2017\Projects\Stonebuck\Stonebuck\bin\Debug\netcoreapp2.0\Stonebuck.runtimeconfig.json
+C:\Users\hanne_000\Documents\Visual Studio 2017\Projects\Stonebuck\Stonebuck\bin\Debug\netcoreapp2.0\Stonebuck.runtimeconfig.dev.json
+C:\Users\hanne_000\Documents\Visual Studio 2017\Projects\Stonebuck\Stonebuck\bin\Debug\netcoreapp2.0\Stonebuck.dll
+C:\Users\hanne_000\Documents\Visual Studio 2017\Projects\Stonebuck\Stonebuck\bin\Debug\netcoreapp2.0\Stonebuck.pdb
+C:\Users\hanne_000\Documents\Visual Studio 2017\Projects\Stonebuck\Stonebuck\obj\Debug\netcoreapp2.0\Stonebuck.csprojResolveAssemblyReference.cache
+C:\Users\hanne_000\Documents\Visual Studio 2017\Projects\Stonebuck\Stonebuck\obj\Debug\netcoreapp2.0\Stonebuck.csproj.CoreCompileInputs.cache
+C:\Users\hanne_000\Documents\Visual Studio 2017\Projects\Stonebuck\Stonebuck\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+C:\Users\hanne_000\Documents\Visual Studio 2017\Projects\Stonebuck\Stonebuck\obj\Debug\netcoreapp2.0\Stonebuck.AssemblyInfoInputs.cache
+C:\Users\hanne_000\Documents\Visual Studio 2017\Projects\Stonebuck\Stonebuck\obj\Debug\netcoreapp2.0\Stonebuck.AssemblyInfo.cs
+C:\Users\hanne_000\Documents\Visual Studio 2017\Projects\Stonebuck\Stonebuck\obj\Debug\netcoreapp2.0\Stonebuck.dll
+C:\Users\hanne_000\Documents\Visual Studio 2017\Projects\Stonebuck\Stonebuck\obj\Debug\netcoreapp2.0\Stonebuck.pdb
+C:\Projects\StonebuckRepo\Stonebuck\bin\Debug\netcoreapp2.0\Stonebuck.deps.json
+C:\Projects\StonebuckRepo\Stonebuck\bin\Debug\netcoreapp2.0\Stonebuck.runtimeconfig.json
+C:\Projects\StonebuckRepo\Stonebuck\bin\Debug\netcoreapp2.0\Stonebuck.runtimeconfig.dev.json
+C:\Projects\StonebuckRepo\Stonebuck\bin\Debug\netcoreapp2.0\Stonebuck.dll
+C:\Projects\StonebuckRepo\Stonebuck\bin\Debug\netcoreapp2.0\Stonebuck.pdb
+C:\Projects\StonebuckRepo\Stonebuck\obj\Debug\netcoreapp2.0\Stonebuck.csprojResolveAssemblyReference.cache
+C:\Projects\StonebuckRepo\Stonebuck\obj\Debug\netcoreapp2.0\Stonebuck.csproj.CoreCompileInputs.cache
+C:\Projects\StonebuckRepo\Stonebuck\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+C:\Projects\StonebuckRepo\Stonebuck\obj\Debug\netcoreapp2.0\Stonebuck.AssemblyInfoInputs.cache
+C:\Projects\StonebuckRepo\Stonebuck\obj\Debug\netcoreapp2.0\Stonebuck.AssemblyInfo.cs
+C:\Projects\StonebuckRepo\Stonebuck\obj\Debug\netcoreapp2.0\Stonebuck.dll
+C:\Projects\StonebuckRepo\Stonebuck\obj\Debug\netcoreapp2.0\Stonebuck.pdb
