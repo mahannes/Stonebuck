@@ -1,119 +1,164 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.ServiceModel.Syndication;
-//using System.Web;
-//using System.Xml;
-
-//namespace Stonebuck.Models
-//{
-//    public interface IFeedReader
-//    {
-//        IEnumerable<ArticleFaceModel> ReadFeed(int maxNumberOfArticles);
-
-//        string FeedUrl { get; }
-//    }
-
-//    public class AftonbladetFeedReader : IFeedReader
-//    {
-//        public string FeedUrl { get { return "http://www.aftonbladet.se/nyheter/rss.xml"; } }
-
-//        public string FeedName = "Aftonbladet";
-
-//        public string FeedLogoUrl = "/Images/aftonbladet_logo.png";
-
-//        public IEnumerable<ArticleFaceModel> ReadFeed(int maxNumberOfArticles)
-//        {
-//            var articleFaces = RSSHelper.CreateArticleFaces(FeedUrl, 
-//                maxNumberOfArticles, 
-//                FeedName,
-//                FeedLogoUrl);
-            
-//            return articleFaces;
-//        }
-//    }
+﻿using Microsoft.SyndicationFeed;
+using Microsoft.SyndicationFeed.Rss;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Xml;
+using System.Xml.Linq;
 
 
-//    public class ExpressenFeedReader : IFeedReader
-//    {
-//        public string FeedUrl { get { return "http://expressen.se/rss/nyheter "; } }
+namespace Stonebuck.Models
+{
+    public interface IFeedReader
+    {
+        Task<IEnumerable<ArticleFaceViewModel>> ReadFeed(int maxNumberOfArticles);
 
-//        public string FeedName = "Expressen";
+        string FeedUrl { get; }
+    }
+    
 
-//        private string LogoPath = "/Images/expressen_logo.png";
+    public class AftonbladetFeedReader : IFeedReader
+    {
+        public string FeedUrl { get { return "http://www.aftonbladet.se/nyheter/rss.xml"; } }
 
-//        public IEnumerable<ArticleFaceModel> ReadFeed(int maxNumberOfArticles)
-//        {
-//            var articleFaces = RSSHelper.CreateArticleFaces(FeedUrl, 
-//                maxNumberOfArticles,
-//                FeedName,
-//                LogoPath);
-            
-//            return articleFaces;
-//        }
-//    }
+        public string FeedName = "Aftonbladet";
 
-//    public class SydsvenskanFeedReader : IFeedReader
-//    {
-//        public string FeedUrl { get { return "https://www.sydsvenskan.se/rss.xml?latest=1"; } }
+        public string FeedLogoUrl = "/Images/aftonbladet_logo.png";
 
-//        public string FeedName = "Sydsvenskan";
+        public async Task<IEnumerable<ArticleFaceViewModel>> ReadFeed(int maxNumberOfArticles)
+        {
+            var syndicationItems = await RSSHelper.GetSyndicationItemsFromFeed(FeedUrl,
+                maxNumberOfArticles,
+                FeedName);
+            var vms = syndicationItems.ToArticleFaces().ToList();
+            foreach (var viewModel in vms.Where(vm => vm.Author == null))
+                viewModel.Author = FeedName;
+            return vms;
+        }
+    }
 
-//        private string FeedLogoPath = "/Images/sydsvenskan_logo.png";
+    public class ExpressenFeedReader : IFeedReader
+    {
+        public string FeedUrl { get { return "http://expressen.se/rss/nyheter "; } }
 
-//        public IEnumerable<ArticleFaceModel> ReadFeed(int maxNumberOfArticles)
-//        {
-//            return RSSHelper.CreateArticleFaces(FeedUrl, 
-//                maxNumberOfArticles, 
-//                FeedName,
-//                FeedLogoPath);
-//        }
-//    }
+        public string FeedName = "Expressen";
 
-//    public static class RSSHelper
-//    {
-//        public static IEnumerable<ArticleFaceModel> CreateArticleFaces(string feedUrl, 
-//            int maxNumberToTake,
-//            string feedName,
-//            string feedImageUrl = null)
-//        {
-//            var articleFaces = new List<ArticleFaceModel>();
+        private string LogoPath = "/Images/expressen_logo.png";
 
-//            using (XmlReader reader = XmlReader.Create(feedUrl))
-//            {
-//                SyndicationFeed feed = SyndicationFeed.Load(reader);
+        public async Task<IEnumerable<ArticleFaceViewModel>> ReadFeed(int maxNumberOfArticles)
+        {
+            var syndicationItems = await RSSHelper.GetSyndicationItemsFromFeed(FeedUrl,
+                maxNumberOfArticles,
+                FeedName);
+            var vms = syndicationItems.ToArticleFaces().ToList();
+            foreach (var viewModel in vms.Where(vm => vm.Author == null))
+                viewModel.Author = FeedName;
+            return vms;
+        }
+    }
 
-//                foreach (SyndicationItem item in feed.Items.Take(maxNumberToTake).ToList())
-//                {
-//                    var url = item.Links.First().Uri.AbsoluteUri;
+    public class SydsvenskanFeedReader : IFeedReader
+    {
+        public string FeedUrl { get { return "https://www.sydsvenskan.se/rss.xml?latest=1"; } }
 
-//                    var author = item.Authors.FirstOrDefault();
-//                    var authorName = author != null 
-//                        ? author.Name 
-//                        : null;
+        public string FeedName = "Sydsvenskan";
 
+        private string FeedLogoPath = "/Images/sydsvenskan_logo.png";
 
-//                    var header = item.Title.Text;
+        public async Task<IEnumerable<ArticleFaceViewModel>> ReadFeed(int maxNumberOfArticles)
+        {
+            var syndicationItems =  await RSSHelper.GetSyndicationItemsFromFeed(FeedUrl,
+                maxNumberOfArticles,
+                FeedName);
+            var vms = syndicationItems.ToArticleFaces().ToList();
+            foreach(var viewModel in vms.Where(vm => vm.Author == null))
+                viewModel.Author = FeedName;
+            return vms;
+        }
+    }
 
-//                    string imgLink = feedImageUrl;
-//                    var articleFace = new ArticleFaceModel()
-//                    {
-//                        Author = authorName,
-//                        Header = header,
-//                        Link = url,
-//                        ImageLink = imgLink,
-//                        Source = feedName
-//                    };
-//                    if (item.Categories != null)
-//                        foreach (var category in item.Categories)
-//                            articleFace.Categories.Add(category.Name);
+    public static class SyndicationItemExtensions
+    {
+        public static IEnumerable<ArticleFaceViewModel> ToArticleFaces(this IEnumerable<ISyndicationItem> items)
+        {
+            return items.Select(i => i.ToArticleFace());
+        }
 
-//                    articleFaces.Add(articleFace);
-//                }
-//            }
-//            return articleFaces;
-//        } 
-//    }
+        public static ArticleFaceViewModel ToArticleFace(this ISyndicationItem item)
+        {
+            var desc = item.Description;
+            return new ArticleFaceViewModel()
+            {
+                Title = item.Title,
+                Url = item.Links.FirstOrDefault(li => li != null).Uri.AbsoluteUri,
+            };
+        }
+    }
 
+    public static class RSSHelper
+    {
+        public async static Task<IEnumerable<ISyndicationItem>> GetSyndicationItemsFromFeed(string url,
+            int maxNumberToTake,
+            string feedName)
+        {
+            var syndicationItems = new List<ISyndicationItem>();
 
-//}
+            // Create an XmlReader
+            // Example: ..\tests\TestFeeds\rss20-2items.xml
+            using (var xmlReader = XmlReader.Create(url, new XmlReaderSettings() { Async = true }))
+            {
+                // Instantiate an Rss20FeedReader using the XmlReader.
+                // This will assign as default an Rss20FeedParser as the parser.
+                var feedReader = new RssFeedReader(xmlReader);
+
+                //
+                // Read the feed
+                while (await feedReader.Read())
+                {
+                    if (syndicationItems.Count >= maxNumberToTake)
+                        break;
+
+                    switch (feedReader.ElementType)
+                    {
+                        // Read category
+                        case SyndicationElementType.Category:
+                            ISyndicationCategory category = await feedReader.ReadCategory();
+                            break;
+
+                        // Read Image
+                        case SyndicationElementType.Image:
+                            ISyndicationImage image = await feedReader.ReadImage();
+                            break;
+
+                        // Read Item
+                        case SyndicationElementType.Item:
+                            ISyndicationItem item = await feedReader.ReadItem();
+                            // TODO The item.Description contains the src to the image in some 
+                            syndicationItems.Add(item);
+                            break;
+
+                            // Read link
+                        case SyndicationElementType.Link:
+                            ISyndicationLink link = await feedReader.ReadLink();
+                            break;
+
+                        // Read Person
+                        case SyndicationElementType.Person:
+                            ISyndicationPerson person = await feedReader.ReadPerson();
+                            break;
+
+                        // Read content
+                        default:
+                            ISyndicationContent content = await feedReader.ReadContent();
+                            break;
+                    }
+                }
+            }
+            return syndicationItems;
+        }
+    }
+
+}

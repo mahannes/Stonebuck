@@ -2651,6 +2651,21 @@
           "lib/netstandard1.4/Microsoft.Rest.ClientRuntime.Azure.dll": {}
         }
       },
+      "Microsoft.SyndicationFeed.ReaderWriter/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Globalization": "4.3.0",
+          "System.Linq": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Xml.ReaderWriter": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Microsoft.SyndicationFeed.ReaderWriter.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Microsoft.SyndicationFeed.ReaderWriter.dll": {}
+        }
+      },
       "Microsoft.VisualStudio.Web.BrowserLink/2.0.0": {
         "type": "package",
         "dependencies": {
@@ -7614,6 +7629,16 @@
         "lib/netstandard1.4/Microsoft.Rest.ClientRuntime.Azure.xml",
         "microsoft.rest.clientruntime.azure.3.3.7.nupkg.sha512",
         "microsoft.rest.clientruntime.azure.nuspec"
+      ]
+    },
+    "Microsoft.SyndicationFeed.ReaderWriter/1.0.0": {
+      "sha512": "RLkbAzd2KjxJrSgkL9Leyhz8CzwPiVRJS5UOOsOAX0A8L4E0l5NIL+5HihhHbXwgqP/ipScd+bbLRUKG0TG86A==",
+      "type": "package",
+      "path": "microsoft.syndicationfeed.readerwriter/1.0.0",
+      "files": [
+        "lib/netstandard1.3/Microsoft.SyndicationFeed.ReaderWriter.dll",
+        "microsoft.syndicationfeed.readerwriter.1.0.0.nupkg.sha512",
+        "microsoft.syndicationfeed.readerwriter.nuspec"
       ]
     },
     "Microsoft.VisualStudio.Web.BrowserLink/2.0.0": {
@@ -13112,11 +13137,12 @@
       "Microsoft.AspNetCore.All >= 2.0.0",
       "Microsoft.EntityFrameworkCore.Tools >= 2.0.0",
       "Microsoft.NETCore.App >= 2.0.0",
+      "Microsoft.SyndicationFeed.ReaderWriter >= 1.0.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\hanne_000\\.nuget\\packages\\": {},
+    "C:\\Users\\Hannes Andersson\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
@@ -13125,17 +13151,17 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Projects\\StonebuckRepo\\Stonebuck\\Stonebuck.csproj",
+      "projectUniqueName": "C:\\Git Private\\StonebuckRepo\\Stonebuck\\Stonebuck.csproj",
       "projectName": "Stonebuck",
-      "projectPath": "C:\\Projects\\StonebuckRepo\\Stonebuck\\Stonebuck.csproj",
-      "packagesPath": "C:\\Users\\hanne_000\\.nuget\\packages\\",
-      "outputPath": "C:\\Projects\\StonebuckRepo\\Stonebuck\\obj\\",
+      "projectPath": "C:\\Git Private\\StonebuckRepo\\Stonebuck\\Stonebuck.csproj",
+      "packagesPath": "C:\\Users\\Hannes Andersson\\.nuget\\packages\\",
+      "outputPath": "C:\\Git Private\\StonebuckRepo\\Stonebuck\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\hanne_000\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Hannes Andersson\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -13168,6 +13194,10 @@
             "suppressParent": "All",
             "target": "Package",
             "version": "2.0.0"
+          },
+          "Microsoft.SyndicationFeed.ReaderWriter": {
+            "target": "Package",
+            "version": "1.0.0"
           },
           "Microsoft.NETCore.App": {
             "target": "Package",

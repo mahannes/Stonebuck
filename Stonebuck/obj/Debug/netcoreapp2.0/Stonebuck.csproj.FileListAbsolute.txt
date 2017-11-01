@@ -22,3 +22,15 @@ C:\Projects\StonebuckRepo\Stonebuck\obj\Debug\netcoreapp2.0\Stonebuck.AssemblyIn
 C:\Projects\StonebuckRepo\Stonebuck\obj\Debug\netcoreapp2.0\Stonebuck.AssemblyInfo.cs
 C:\Projects\StonebuckRepo\Stonebuck\obj\Debug\netcoreapp2.0\Stonebuck.dll
 C:\Projects\StonebuckRepo\Stonebuck\obj\Debug\netcoreapp2.0\Stonebuck.pdb
+C:\Git Private\StonebuckRepo\Stonebuck\bin\Debug\netcoreapp2.0\Stonebuck.deps.json
+C:\Git Private\StonebuckRepo\Stonebuck\bin\Debug\netcoreapp2.0\Stonebuck.runtimeconfig.json
+C:\Git Private\StonebuckRepo\Stonebuck\bin\Debug\netcoreapp2.0\Stonebuck.runtimeconfig.dev.json
+C:\Git Private\StonebuckRepo\Stonebuck\bin\Debug\netcoreapp2.0\Stonebuck.dll
+C:\Git Private\StonebuckRepo\Stonebuck\bin\Debug\netcoreapp2.0\Stonebuck.pdb
+C:\Git Private\StonebuckRepo\Stonebuck\obj\Debug\netcoreapp2.0\Stonebuck.csproj.CoreCompileInputs.cache
+C:\Git Private\StonebuckRepo\Stonebuck\obj\Debug\netcoreapp2.0\Stonebuck.AssemblyInfoInputs.cache
+C:\Git Private\StonebuckRepo\Stonebuck\obj\Debug\netcoreapp2.0\Stonebuck.AssemblyInfo.cs
+C:\Git Private\StonebuckRepo\Stonebuck\obj\Debug\netcoreapp2.0\Stonebuck.dll
+C:\Git Private\StonebuckRepo\Stonebuck\obj\Debug\netcoreapp2.0\Stonebuck.pdb
+C:\Git Private\StonebuckRepo\Stonebuck\obj\Debug\netcoreapp2.0\Stonebuck.csprojResolveAssemblyReference.cache
+C:\Git Private\StonebuckRepo\Stonebuck\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs

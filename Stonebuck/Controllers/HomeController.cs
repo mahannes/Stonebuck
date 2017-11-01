@@ -10,9 +10,14 @@ namespace Stonebuck.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var vms = new List<ArticleFaceViewModel>();
+            vms.AddRange(await new AftonbladetFeedReader().ReadFeed(5));
+            vms.AddRange(await new ExpressenFeedReader().ReadFeed(5));
+            vms.AddRange(await new SydsvenskanFeedReader().ReadFeed(5));
+            
+            return View(vms.ToHashSet());
         }
 
         public IActionResult About()
