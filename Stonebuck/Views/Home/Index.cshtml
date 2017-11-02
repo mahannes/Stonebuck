@@ -7,50 +7,84 @@
     int nRows = Model.Count() / 3;
 }
 
+
 <div class="row">
     <div class="col-md-3">
         @foreach (var vm in Model.Take(nRows))
         {
-            <a href="@vm.Url">
                 <div class="panel panel-info">
-                    <div class="panel-body">
-
-                        <h5>@vm.Category</h5>
-                        <h3>@vm.Title</h3>
-                        <label>@vm.Author</label>
+                    <div class="text-right">
+                        <a href="#" class="btn btn-primary">
+                            <i class="fa fa-star-half-full"></i>
+                        </a>
                     </div>
+
+                    <a href="@vm.Url">
+                        <div class="panel-body">
+
+                            <h5>@vm.Category</h5>
+                            <h3>@vm.Title</h3>
+
+                            @if (vm.ImageUrl != null)
+                            {
+                                <img src=@vm.ImageUrl class="img-rounded" style="width:100%" />
+                            }
+                            <label>@vm.Author</label>
+                        </div>
+                    </a>
                 </div>
-            </a>
         } 
     </div>
     <div class="col-md-3">
         @foreach (var vm in Model.Skip(nRows).Take(nRows))
         {
-            <a href="@vm.Url">
-                <div class="panel panel-info">
+            <div class="panel panel-info">
+                <div class="text-right">
+                    <a href="#" class="btn btn-primary">
+                        <i class="fa fa-star-half-full"></i>
+                    </a>
+                </div>
+
+                <a href="@vm.Url">
                     <div class="panel-body">
 
                         <h5>@vm.Category</h5>
                         <h3>@vm.Title</h3>
+
+                        @if (vm.ImageUrl != null)
+                        {
+                            <img src=@vm.ImageUrl class="img-rounded" style="width:100%" />
+                        }
                         <label>@vm.Author</label>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
         }
     </div>
     <div class="col-md-3">
         @foreach (var vm in Model.Skip(2 * nRows).Take(nRows))
         {
-            <a href="@vm.Url">
-                <div class="panel panel-info">
+            <div class="panel panel-info">
+                <div class="text-right">
+                    <a href="#" class="btn btn-primary">
+                        <i class="fa fa-star-half-full"></i>
+                    </a>
+                </div>
+
+                <a href="@vm.Url">
                     <div class="panel-body">
 
                         <h5>@vm.Category</h5>
                         <h3>@vm.Title</h3>
+
+                        @if (vm.ImageUrl != null)
+                        {
+                            <img src=@vm.ImageUrl class="img-rounded" style="width:100%" />
+                        }
                         <label>@vm.Author</label>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
         }       
     </div>
 </div>
