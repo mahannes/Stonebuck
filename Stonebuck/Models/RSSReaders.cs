@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Xml;
@@ -89,11 +90,13 @@ namespace Stonebuck.Models
 
         public static ArticleFaceViewModel ToArticleFace(this ISyndicationItem item)
         {
-            var desc = item.Description;
+            string imageUrl;
+            var hasImagePath = RSSHelper.TryGetImagePathFromDescription(item.Description, out imageUrl);
             return new ArticleFaceViewModel()
             {
                 Title = item.Title,
                 Url = item.Links.FirstOrDefault(li => li != null).Uri.AbsoluteUri,
+                ImageUrl = imageUrl
             };
         }
     }
@@ -158,6 +161,30 @@ namespace Stonebuck.Models
                 }
             }
             return syndicationItems;
+        }
+
+        public static bool TryGetImagePathFromDescription(string description, out string imageUrl)
+        {
+            if (description != null)
+            {
+                var match = Regex.Match(description, "<img.+?src=[\"'](.+?)[\"'].*?>", RegexOptions.IgnoreCase);
+                if(match != null && match.Groups.Count > 1)
+                {
+                    var group = match.Groups[1];
+                    if (group != null)
+                    {
+                        string matchString = group.Value;
+                        if (Uri.IsWellFormedUriString(matchString, UriKind.RelativeOrAbsolute))
+                        {
+                            imageUrl = matchString;
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            imageUrl = null;
+            return false;
         }
     }
 
