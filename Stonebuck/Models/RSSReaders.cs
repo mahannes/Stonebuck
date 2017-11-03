@@ -13,81 +13,8 @@ using System.Xml.Linq;
 
 namespace Stonebuck.Models
 {
-    public interface IFeedReader
-    {
-        Task<IEnumerable<ArticleFaceViewModel>> ReadFeed(int maxNumberOfArticles);
-
-        string FeedUrl { get; }
-    }
-    
-
-    public class AftonbladetFeedReader : IFeedReader
-    {
-        public string FeedUrl { get { return "http://www.aftonbladet.se/nyheter/rss.xml"; } }
-
-        public string FeedName = "Aftonbladet";
-
-        public string FeedLogoUrl = "/Images/aftonbladet_logo.png";
-
-        public async Task<IEnumerable<ArticleFaceViewModel>> ReadFeed(int maxNumberOfArticles)
-        {
-            var syndicationItems = await RSSHelper.GetSyndicationItemsFromFeed(FeedUrl,
-                maxNumberOfArticles,
-                FeedName);
-            var vms = syndicationItems.ToArticleFaces().ToList();
-            foreach (var viewModel in vms.Where(vm => vm.Author == null))
-                viewModel.Author = FeedName;
-            return vms;
-        }
-    }
-
-    public class ExpressenFeedReader : IFeedReader
-    {
-        public string FeedUrl { get { return "http://expressen.se/rss/nyheter "; } }
-
-        public string FeedName = "Expressen";
-
-        private string LogoPath = "/Images/expressen_logo.png";
-
-        public async Task<IEnumerable<ArticleFaceViewModel>> ReadFeed(int maxNumberOfArticles)
-        {
-            var syndicationItems = await RSSHelper.GetSyndicationItemsFromFeed(FeedUrl,
-                maxNumberOfArticles,
-                FeedName);
-            var vms = syndicationItems.ToArticleFaces().ToList();
-            foreach (var viewModel in vms.Where(vm => vm.Author == null))
-                viewModel.Author = FeedName;
-            return vms;
-        }
-    }
-
-    public class SydsvenskanFeedReader : IFeedReader
-    {
-        public string FeedUrl { get { return "https://www.sydsvenskan.se/rss.xml?latest=1"; } }
-
-        public string FeedName = "Sydsvenskan";
-
-        private string FeedLogoPath = "/Images/sydsvenskan_logo.png";
-
-        public async Task<IEnumerable<ArticleFaceViewModel>> ReadFeed(int maxNumberOfArticles)
-        {
-            var syndicationItems =  await RSSHelper.GetSyndicationItemsFromFeed(FeedUrl,
-                maxNumberOfArticles,
-                FeedName);
-            var vms = syndicationItems.ToArticleFaces().ToList();
-            foreach(var viewModel in vms.Where(vm => vm.Author == null))
-                viewModel.Author = FeedName;
-            return vms;
-        }
-    }
-
     public static class SyndicationItemExtensions
     {
-        public static IEnumerable<ArticleFaceViewModel> ToArticleFaces(this IEnumerable<ISyndicationItem> items)
-        {
-            return items.Select(i => i.ToArticleFace());
-        }
-
         public static ArticleFaceViewModel ToArticleFace(this ISyndicationItem item)
         {
             string imageUrl;
@@ -103,6 +30,18 @@ namespace Stonebuck.Models
 
     public static class RSSHelper
     {
+        public static async Task<IEnumerable<ArticleFaceViewModel>> GetArticleFacesFromFeed(IFeedSubscription feedSubscription, 
+            int maxNumberOfArticles)
+        {
+            var syndicationItems = await RSSHelper.GetSyndicationItemsFromFeed(feedSubscription.Url,
+                maxNumberOfArticles,
+                feedSubscription.Name);
+            var vms = syndicationItems.Select(i => i.ToArticleFace()).ToList();
+            foreach (var viewModel in vms.Where(vm => vm.Author == null))
+                viewModel.Author = feedSubscription.Name;
+            return vms;
+        }
+
         public async static Task<IEnumerable<ISyndicationItem>> GetSyndicationItemsFromFeed(string url,
             int maxNumberToTake,
             string feedName)

@@ -13,10 +13,10 @@ namespace Stonebuck.Controllers
         public async Task<IActionResult> Index()
         {
             var vms = new List<ArticleFaceViewModel>();
-            vms.AddRange(await new AftonbladetFeedReader().ReadFeed(5));
-            vms.AddRange(await new ExpressenFeedReader().ReadFeed(5));
-            vms.AddRange(await new SydsvenskanFeedReader().ReadFeed(5));
-            
+            vms.AddRange(await RSSHelper.GetArticleFacesFromFeed(new AftonbladetFeedSubscription(), 5));
+            vms.AddRange(await RSSHelper.GetArticleFacesFromFeed(new ExpressenFeedSubscription(), 5));
+            vms.AddRange(await RSSHelper.GetArticleFacesFromFeed(new SydsvenskanFeedSubscription(), 5));
+
             return View(vms.ToHashSet());
         }
 
