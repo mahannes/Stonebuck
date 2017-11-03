@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Stonebuck.Data;
 using Stonebuck.Models;
 using Stonebuck.Services;
+using AutoMapper;
+using Stonebuck.Models.DatabaseAccess;
 
 namespace Stonebuck
 {
@@ -43,7 +45,7 @@ namespace Stonebuck
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
-
+            services.AddTransient<IStonebuckRepository, StonebuckRepository>();
             services.AddMvc();
         }
 
@@ -60,6 +62,12 @@ namespace Stonebuck
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            // This is where we set up automapper
+            Mapper.Initialize(config =>
+            {
+                config.CreateMap<SubscribableViewModel, ISubscribable>();
+            });
 
             app.UseStaticFiles();
 
