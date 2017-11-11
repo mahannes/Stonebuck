@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Stonebuck.Models.DatabaseAccess
 {
-    public interface IStonebuckRepository
+    public interface INewsAppDataAccess
     {
         Task<IEnumerable<ISubscribable>> GetAllSubscribables();
 

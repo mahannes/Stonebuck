@@ -14,9 +14,9 @@ namespace Stonebuck.Controllers.API
     [Route("api/Subscriptions")]
     public class SubscriptionsController : Controller
     {
-        private readonly IStonebuckRepository _repository;
+        private readonly INewsAppDataAccess _repository;
 
-        public SubscriptionsController(IStonebuckRepository repository)
+        public SubscriptionsController(INewsAppDataAccess repository)
         {
             this._repository = repository;
         }

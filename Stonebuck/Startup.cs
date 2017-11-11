@@ -45,7 +45,7 @@ namespace Stonebuck
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
-            services.AddTransient<IStonebuckRepository, StonebuckRepository>();
+            services.AddTransient<INewsAppDataAccess, NewsAppDataAccess>();
             services.AddMvc();
         }
 
