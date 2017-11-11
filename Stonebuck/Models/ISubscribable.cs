@@ -10,9 +10,6 @@ namespace Stonebuck.Models
     /// </summary>
     public interface ISubscribable
     {
-
-        int Id { get; }
-
         string Name { get; }
 
 
