@@ -11,8 +11,6 @@ namespace Stonebuck.Models
     {
         [BsonId]
         public ObjectId Id { get; set; }
-        [BsonElement("FeedSubscriptionId")]
-        public int FeedSubscriptionId { get; set; }
         [BsonElement("Url")]
         public string Url { get; set; }
         [BsonElement("Name")]

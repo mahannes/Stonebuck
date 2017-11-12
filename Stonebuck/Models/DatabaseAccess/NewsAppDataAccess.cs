@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,15 +13,20 @@ namespace Stonebuck.Models.DatabaseAccess
         IMongoDatabase _db;
 
         const string NEWSAPP_DATABASE_NAME = "NewsAppDB";
+        const string NEWSAPP_DATABASEFORTEST_NAME = "NewsAppDBForTest";
+
         const string USER_COLLECTION = "Users";
         const string FEED_SUBSCRIPTION_COLLECTION = "FeedSubscriptions";
         // TODO Move the connectionstring to a config file
         const string MONGODB_CONNECTION_STRING = "mongodb://localhost:27017";
 
-        public NewsAppDataAccess()
+        public NewsAppDataAccess(bool useTestDatabase = false)
         {
             _client = new MongoClient(MONGODB_CONNECTION_STRING);
-            _db = _client.GetDatabase(NEWSAPP_DATABASE_NAME);
+            var dbName = useTestDatabase 
+                ? NEWSAPP_DATABASEFORTEST_NAME 
+                : NEWSAPP_DATABASE_NAME;
+            _db = _client.GetDatabase(dbName);
         }
 
 
@@ -56,22 +62,61 @@ namespace Stonebuck.Models.DatabaseAccess
             var userCollection = _db.GetCollection<NewsAppUser>(USER_COLLECTION);
             var builder = Builders<NewsAppUser>.Filter;
             var filter = builder.Eq(x => x.UserName, userName);
-            return await userCollection.Find(filter).FirstOrDefaultAsync();
+            var user = await userCollection.Find(filter).FirstOrDefaultAsync();
+
+            if (user != null)
+            {
+                var feedSubscriptionIds = user.FeedSubscriptionIds;
+                var feedSubscriptionCollection = _db.GetCollection<FeedSubscription>(FEED_SUBSCRIPTION_COLLECTION);
+
+                //Find all feedsubscriptions the user has
+                var builder2 = Builders<FeedSubscription>.Filter;
+                var feedFilter = builder2.In(x => x.Id, feedSubscriptionIds);
+
+                var feedSubscriptions = await feedSubscriptionCollection.FindAsync(feedFilter);
+                user.FeedSubscriptions = feedSubscriptions.ToEnumerable();
+            }
+            return user;
         }
 
+        //TODO Make async
         public void AddNewsAppUser(NewsAppUser user)
         {
+            var feedSubscriptionCollection = _db.GetCollection<FeedSubscription>(FEED_SUBSCRIPTION_COLLECTION);
+            var builder = Builders<FeedSubscription>.Filter;
+
+            //Make sure the feedsubscription ids match the feedsubscriptions
+            var ids = user.FeedSubscriptions.Select(f => f.Id).ToHashSet();
+            user.FeedSubscriptionIds = ids.ToArray();
+
             //TODO Validate data
             var userCollection = _db.GetCollection<NewsAppUser>(USER_COLLECTION);
             userCollection.InsertOne(user);
         }
 
-        public void AddFeedSubscriptionForUser(NewsAppUser user, FeedSubscription fs)
+        //TODO Make Async
+        public void DeleteNewsAppUser(NewsAppUser user)
         {
+            var collection = _db.GetCollection<NewsAppUser>(USER_COLLECTION);
+            var builder = Builders<NewsAppUser>.Filter;
+            var filter = builder.Eq(x => x.UserName, user.UserName);
+            collection.FindOneAndDelete<NewsAppUser>(filter);
+        }
 
+        public async Task AddFeedSubscriptionForUser(NewsAppUser user, FeedSubscription fs)
+        {
+            //TODO Make this better
+            var ids = user.FeedSubscriptionIds.ToList();
+            ids.Add(fs.Id);
+            user.FeedSubscriptionIds = ids.ToArray();
+            var userCollection = _db.GetCollection<NewsAppUser>(USER_COLLECTION);
+
+            var filter = Builders<NewsAppUser>.Filter.Eq(u => u.Id, user.Id);
+            var update = Builders<NewsAppUser>.Update.AddToSet(u => u.FeedSubscriptionIds, fs.Id);
+            await userCollection.UpdateOneAsync(filter, update);
         }
         #endregion
-
+        
         #region Example data
         public Task<IEnumerable<ISubscribable>> GetAllSubscribables()
         {
