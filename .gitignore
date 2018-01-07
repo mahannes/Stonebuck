@@ -1,4 +1,6 @@
 packages/
 .vs/
+Stonebuck/bin/
+Stonebuck/obj/
 StonebuckTest/bin/
 StonebuckTest/obj/
